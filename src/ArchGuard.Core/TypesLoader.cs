@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace ArchGuard.Core;
 
-internal sealed class TypesLoader
+public sealed class TypesLoader
 {
     private static readonly ConcurrentDictionary<ProjectSpec, SemaphoreSlim> _locks = new();
     private static readonly ConcurrentDictionary<ProjectSpec, HashSet<TypeArtifact>> _cache = new();
@@ -25,7 +25,7 @@ internal sealed class TypesLoader
             var assembly = compilation.Assembly;
             var @namespace = compilation.GlobalNamespace;
 
-            var typesG = GetTypes(@namespace, assembly);
+            var typesG = GetTypes(project, @namespace, assembly);
 
             _cache.TryAdd(project, typesG);
 
@@ -38,7 +38,7 @@ internal sealed class TypesLoader
         }
     }
 
-    private HashSet<TypeArtifact> GetTypes(INamespaceSymbol @namespace, IAssemblySymbol assembly)
+    private HashSet<TypeArtifact> GetTypes(ProjectSpec project, INamespaceSymbol @namespace, IAssemblySymbol assembly)
     {
         var types = new HashSet<TypeArtifact>();
         foreach (
@@ -49,17 +49,21 @@ internal sealed class TypesLoader
                 )
         )
         {
-            types.Add(new TypeArtifact(type));
-            types.UnionWith(GetAllTypeMembers(type, assembly!));
+            types.Add(new TypeArtifact(type, project));
+            types.UnionWith(GetAllTypeMembers(project, type, assembly!));
         }
 
         foreach (var nestedNamespace in @namespace.GetNamespaceMembers())
-            types.UnionWith(GetTypes(nestedNamespace, assembly));
+            types.UnionWith(GetTypes(project, nestedNamespace, assembly));
 
         return types;
     }
 
-    private static HashSet<TypeArtifact> GetAllTypeMembers(INamedTypeSymbol typeSymbol, IAssemblySymbol assemblySymbol)
+    private static HashSet<TypeArtifact> GetAllTypeMembers(
+        ProjectSpec project,
+        INamedTypeSymbol typeSymbol,
+        IAssemblySymbol assemblySymbol
+    )
     {
         var types = new HashSet<TypeArtifact>();
         foreach (
@@ -70,10 +74,21 @@ internal sealed class TypesLoader
                 )
         )
         {
-            types.Add(new TypeArtifact(nestedType));
-            types.UnionWith(GetAllTypeMembers(nestedType, assemblySymbol));
+            types.Add(new TypeArtifact(nestedType, project));
+            types.UnionWith(GetAllTypeMembers(project, nestedType, assemblySymbol));
         }
 
         return types;
+    }
+
+    internal TypeArtifact? GetParentType(TypeArtifact type, INamedTypeSymbol? parentNamedTypeSymbol)
+    {
+        if (parentNamedTypeSymbol is null)
+            return null;
+
+        var types = GetTypes(type.Project);
+        return types.FirstOrDefault(t =>
+            t.FullName.Equals(SymbolHelper.GetFullName(parentNamedTypeSymbol), StringComparison.Ordinal)
+        );
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 namespace ArchGuard.Core;
 
-internal sealed class ProjectCompiler
+public sealed class ProjectCompiler
 {
     public ProjectSpec Compile(string projectFilePath)
     {

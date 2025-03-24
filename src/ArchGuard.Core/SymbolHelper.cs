@@ -25,14 +25,7 @@ internal static class SymbolHelper
     {
         ArgumentNullException.ThrowIfNull(symbol);
 
-        return symbol.MetadataName;
-    }
-
-    internal static string GetFullName(ISymbol symbol)
-    {
-        ArgumentNullException.ThrowIfNull(symbol);
-
-        var name = GetName(symbol);
+        var name = symbol.MetadataName;
 
         if (symbol is not INamedTypeSymbol namedTypeSymbol)
             return name;
@@ -48,6 +41,18 @@ internal static class SymbolHelper
             name = name[..^1];
 
         return name;
+    }
+
+    internal static string GetFullName(ISymbol symbol)
+    {
+        ArgumentNullException.ThrowIfNull(symbol);
+
+        var name = GetName(symbol);
+
+        if (symbol is not INamedTypeSymbol)
+            return name;
+
+        return GetNamespace(symbol) + "." + name;
     }
 
     internal static bool IsPublic(ISymbol symbol)
