@@ -1,5 +1,3 @@
-using ArchGuard.Core;
-
 namespace ArchGuard.Compiling.Tests;
 
 public class GetTypesTest
