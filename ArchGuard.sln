@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{282F3F0D-7CD7-469B-A94E-EAE3A3541C27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{5C18DD66-8F56-4A92-BB3B-77990268C23B}"
+	ProjectSection(SolutionItems) = preProject
+		.csharpierrc = .csharpierrc
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".husky", ".husky", "{9A3ECEB0-957E-4C84-B757-A11B41DB0DF4}"
+	ProjectSection(SolutionItems) = preProject
+		.husky\commit-lint.csx = .husky\commit-lint.csx
+		.husky\commit-msg = .husky\commit-msg
+		.husky\pre-commit = .husky\pre-commit
+		.husky\task-runner.json = .husky\task-runner.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{421BFEEC-BC57-4C8B-AD1A-FEE1B9619B0E}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A3ECEB0-957E-4C84-B757-A11B41DB0DF4} = {5C18DD66-8F56-4A92-BB3B-77990268C23B}
+		{421BFEEC-BC57-4C8B-AD1A-FEE1B9619B0E} = {5C18DD66-8F56-4A92-BB3B-77990268C23B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18480102-CD87-4F01-A632-222CC9E83083}
+	EndGlobalSection
+EndGlobal

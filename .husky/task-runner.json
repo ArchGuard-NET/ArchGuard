@@ -1,0 +1,35 @@
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "commit-message-linter",
+      "command": "husky",
+      "args": [ "exec", ".husky/commit-lint.csx", "--args", "${args}" ]
+    },
+    {
+      "name": "csharpier",
+      "group": "pre-build",
+      "command": "dotnet",
+      "args": [ "csharpier", "${staged}" ],
+      "include": [ "**/*.cs" ]
+    },
+    {
+      "name": "clean",
+      "group": "build",
+      "command": "dotnet",
+      "args": [ "clean" ]
+    },
+    {
+      "name": "build",
+      "group": "build",
+      "command": "dotnet",
+      "args": [ "build" ]
+    },
+    {
+      "name": "test",
+      "group": "post-build",
+      "command": "dotnet",
+      "args": [ "test" ]
+    }
+  ]
+}
