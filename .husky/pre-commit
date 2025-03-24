@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+husky run --group "pre-build"
+husky run --group "build"
+husky run --group "post-build"
