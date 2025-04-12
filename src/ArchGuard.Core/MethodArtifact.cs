@@ -18,6 +18,11 @@ public sealed class MethodArtifact : Artifact, IEquatable<MethodArtifact>
         ArgumentNullException.ThrowIfNull(symbol);
         ArgumentNullException.ThrowIfNull(project);
 
+        // TODO: implementation > do not let constructors be constructed as MethodArtifact
+        // TODO: unit test > ^
+
+        // TODO: add parameters as property or get method
+
         _methodSymbol = symbol;
 
         ContainingType = type;

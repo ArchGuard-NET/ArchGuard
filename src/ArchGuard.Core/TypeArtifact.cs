@@ -34,7 +34,11 @@ public sealed class TypeArtifact : Artifact, IEquatable<TypeArtifact>
             .GetMembers()
             .OfType<IMethodSymbol>()
             .Where(method =>
-                method.MethodKind is MethodKind.Ordinary or MethodKind.PropertyGet or MethodKind.PropertySet
+                // avoid property { get; set; }
+                method.MethodKind
+                    is MethodKind.Ordinary
+                        or MethodKind.PropertyGet
+                        or MethodKind.PropertySet
                 // avoid ctor method
                 && !method.IsImplicitlyDeclared
             )

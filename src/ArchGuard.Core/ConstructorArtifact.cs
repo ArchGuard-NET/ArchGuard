@@ -18,6 +18,7 @@ public sealed class ConstructorArtifact : Artifact, IEquatable<ConstructorArtifa
         ArgumentNullException.ThrowIfNull(symbol);
         ArgumentNullException.ThrowIfNull(project);
 
+        // TODO: add test
         if (symbol.MethodKind is not MethodKind.Constructor)
         {
             throw new InvalidOperationException(

@@ -8,6 +8,8 @@ public sealed class PropertyArtifact : Artifact, IEquatable<PropertyArtifact>
 {
     private readonly IPropertySymbol _propertySymbol;
 
+    // TODO: add get & set methods
+
     public override TypeArtifact ContainingType { get; }
 
     public TypeArtifact Type { get; }
