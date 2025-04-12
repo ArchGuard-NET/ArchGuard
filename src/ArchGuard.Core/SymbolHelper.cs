@@ -12,7 +12,7 @@ internal static class SymbolHelper
         var fullName = @namespace.Name;
 
         var containingNamespace = @namespace.ContainingNamespace;
-        while (containingNamespace is not null && !containingNamespace.IsGlobalNamespace)
+        while (containingNamespace?.IsGlobalNamespace == false)
         {
             fullName = $"{containingNamespace.Name}.{fullName}";
             containingNamespace = containingNamespace.ContainingNamespace;
@@ -26,14 +26,29 @@ internal static class SymbolHelper
         ArgumentNullException.ThrowIfNull(symbol);
 
         var name = symbol.MetadataName;
+        if (symbol is IMethodSymbol methodSymbol)
+        {
+            if (name.Equals(".ctor", StringComparison.OrdinalIgnoreCase))
+                name = "_ctor";
 
-        if (symbol is not INamedTypeSymbol namedTypeSymbol)
-            return name;
+            name += "(";
+            foreach (var (index, parameter) in methodSymbol.Parameters.Index())
+            {
+                name += GetName(parameter.Type);
+                if (index != methodSymbol.Parameters.Length - 1)
+                    name += ", ";
+            }
+            name += ")";
+        }
 
-        var containingType = namedTypeSymbol.ContainingType;
+        var first = true;
+        var containingType = symbol.ContainingType;
         while (containingType is not null)
         {
-            name = $"{containingType.Name}+{name}";
+            var concat = first && symbol is not INamedTypeSymbol ? '.' : '+';
+            first = false;
+
+            name = $"{containingType.Name}{concat}{name}";
             containingType = containingType.ContainingType;
         }
 
@@ -48,9 +63,6 @@ internal static class SymbolHelper
         ArgumentNullException.ThrowIfNull(symbol);
 
         var name = GetName(symbol);
-
-        if (symbol is not INamedTypeSymbol)
-            return name;
 
         return GetNamespace(symbol) + "." + name;
     }

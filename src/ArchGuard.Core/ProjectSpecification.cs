@@ -2,13 +2,13 @@ using Microsoft.CodeAnalysis;
 
 namespace ArchGuard.Core;
 
-public sealed class ProjectSpec : IEquatable<ProjectSpec>
+public sealed class ProjectSpecification : IEquatable<ProjectSpecification>
 {
     private readonly Project _project;
 
     internal string Name => _project.Name;
 
-    public ProjectSpec(Project project)
+    public ProjectSpecification(Project project)
     {
         _project = project;
     }
@@ -18,7 +18,7 @@ public sealed class ProjectSpec : IEquatable<ProjectSpec>
         return _project.GetCompilationAsync().Result!;
     }
 
-    public bool Equals(ProjectSpec? other)
+    public bool Equals(ProjectSpecification? other)
     {
         if (other is null)
             return false;
@@ -31,7 +31,7 @@ public sealed class ProjectSpec : IEquatable<ProjectSpec>
         if (obj is null)
             return false;
 
-        if (obj is not ProjectSpec project)
+        if (obj is not ProjectSpecification project)
             return false;
 
         return project.Equals(this);
