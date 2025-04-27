@@ -4,12 +4,12 @@ namespace ArchGuard.Core;
 
 public sealed class ProjectCompiler
 {
-    public ProjectSpec Compile(string projectFilePath)
+    public ProjectSpecification Compile(string projectFilePath)
     {
         using var workspace = MSBuildWorkspace.Create();
 
         var project = workspace.OpenProjectAsync(projectFilePath).Result;
 
-        return new ProjectSpec(project);
+        return new ProjectSpecification(project);
     }
 }

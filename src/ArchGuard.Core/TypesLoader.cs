@@ -5,10 +5,10 @@ namespace ArchGuard.Core;
 
 public sealed class TypesLoader
 {
-    private static readonly ConcurrentDictionary<ProjectSpec, SemaphoreSlim> _locks = new();
-    private static readonly ConcurrentDictionary<ProjectSpec, HashSet<TypeArtifact>> _cache = new();
+    private static readonly ConcurrentDictionary<ProjectSpecification, SemaphoreSlim> _locks = new();
+    private static readonly ConcurrentDictionary<ProjectSpecification, HashSet<TypeArtifact>> _cache = new();
 
-    public HashSet<TypeArtifact> GetTypes(ProjectSpec project)
+    public HashSet<TypeArtifact> GetTypes(ProjectSpecification project)
     {
         if (_cache.TryGetValue(project, out var types))
             return types;
@@ -38,7 +38,11 @@ public sealed class TypesLoader
         }
     }
 
-    private HashSet<TypeArtifact> GetTypes(ProjectSpec project, INamespaceSymbol @namespace, IAssemblySymbol assembly)
+    private HashSet<TypeArtifact> GetTypes(
+        ProjectSpecification project,
+        INamespaceSymbol @namespace,
+        IAssemblySymbol assembly
+    )
     {
         var types = new HashSet<TypeArtifact>();
         foreach (
@@ -60,7 +64,7 @@ public sealed class TypesLoader
     }
 
     private static HashSet<TypeArtifact> GetAllTypeMembers(
-        ProjectSpec project,
+        ProjectSpecification project,
         INamedTypeSymbol typeSymbol,
         IAssemblySymbol assemblySymbol
     )

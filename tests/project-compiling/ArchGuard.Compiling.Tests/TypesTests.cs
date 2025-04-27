@@ -1,13 +1,13 @@
 namespace ArchGuard.Compiling.Tests;
 
-public class GetTypesTest
+public class TypesTests
 {
     [Fact]
-    public void Test1()
+    public void Test()
     {
         // Arrange
         var project =
-            "C:\\Users\\matheus.oliveira\\source\\repos\\github\\me\\ArchGuard\\"
+            "C:\\Users\\matheus\\source\\repos\\ArchGuard\\"
             + "tests\\project-compiling\\ArchGuard.Compiling.Assembly\\ArchGuard.Compiling.Assembly.csproj";
 
         // Act
@@ -18,6 +18,10 @@ public class GetTypesTest
         ordered.ShouldBe(
             [
                 "ArchGuard.Compiling.Assembly.Class",
+                "ArchGuard.Compiling.Assembly.ClassWithFields",
+                "ArchGuard.Compiling.Assembly.ClassWithMethods",
+                "ArchGuard.Compiling.Assembly.ClassWithMultipleConstructors",
+                "ArchGuard.Compiling.Assembly.ClassWithProperties",
                 "ArchGuard.Compiling.Assembly.Generic`1",
                 "ArchGuard.Compiling.Assembly.Generic`2",
                 "ArchGuard.Compiling.Assembly.IGeneric`1",

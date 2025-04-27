@@ -18,3 +18,31 @@ public sealed class Parent
 }
 
 internal sealed class InternalClass;
+
+public sealed class ClassWithProperties
+{
+    public required string String { get; set; }
+    public required int Int { get; set; }
+}
+
+public sealed class ClassWithMethods
+{
+    public void Void() { }
+
+    public string String()
+    {
+        return string.Empty;
+    }
+}
+
+public sealed class ClassWithFields
+{
+    private readonly string _string;
+}
+
+public sealed class ClassWithMultipleConstructors
+{
+    public ClassWithMultipleConstructors() { }
+
+    public ClassWithMultipleConstructors(string @string) { }
+}
